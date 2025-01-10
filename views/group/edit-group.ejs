@@ -1,0 +1,32 @@
+<%- include("../partials/header.ejs")%>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-3">
+                <form method="post">
+                    <div class="row text-center g-3">
+                        <div class="col-12">
+                            <h1>Edit Group</h1>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" name="name" class="form-control" id="name"
+                                    placeholder="Enter Group name" value="<%= group.name%>" required>
+                                <label for="name">Enter Group name</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="description" name="description" class="form-control" id="description"
+                                    placeholder="Enter Group Description" value="<%= group.description%>" required>
+                                <label for="description">Enter Group Description</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-outline-success form-control">Edit Group</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include("../partials/footer.ejs")%>

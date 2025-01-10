@@ -1,0 +1,55 @@
+<%- include("partials/header.ejs")%>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="row justify-content-center w-100">
+            <div class="col-md-3">
+                <form method="post">
+                    <div class="row text-center g-3">
+                        <div class="col-12">
+                            <h1>Log in</h1>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" name="name" class="form-control" id="name"
+                                    placeholder="Enter your name" required>
+                                <label for="name">Enter your name</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="input-group">
+                                <div class="form-floating">
+                                    <input type="password" name="password" class="form-control" id="password"
+                                        placeholder="Enter your password" required>
+                                    <label for="password">Enter your password</label>
+                                </div>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    s
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-outline-success form-control">Log in</button>
+                        </div>
+                        <div class="col-12">
+                            <a href="/group" class="btn btn-outline-dark form-control">Guest</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.getElementById("togglePassword");
+
+        toggleButton.addEventListener("click", () => {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+
+            toggleButton.textContent = type === "password" ? "s" : "h";
+        });
+    </script>
+    </body>
+
+    </html>

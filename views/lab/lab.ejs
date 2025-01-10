@@ -1,0 +1,39 @@
+<%- include("../partials/header.ejs")%>
+    <div class="container d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="row row-cols-3 d-flex justify-content-center align-items-center g-4 w-100">
+            <div class="col-12 text-center">
+                <h1>
+                    <a href="/group" class="btn btn-primary">&lt;</a>
+                    All Labs
+                    <%if (isAuth){%>
+                        <a href="/lab/add" class="btn btn-primary">+</a>
+                        <%}%>
+                </h1>
+            </div>
+            <%for(const [i, d] of data.entries()){%>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h1>
+                                <%= d.name%>
+                            </h1>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-text text-center">
+                                <%= d.description%>
+                            </div>
+                        </div>
+                        <%if (isAuth){%>
+                            <div class="card-footer">
+
+                                <a href="/lab/edit/<%= i%>" class="btn btn-success">Edit</a>
+                                <a href="/lab/delete/<%= i%>" class="btn btn-danger">Delete</a>
+
+                            </div>
+                            <%}%>
+                    </div>
+                </div>
+                <%}%>
+        </div>
+    </div>
+    <%- include("../partials/footer.ejs")%>
