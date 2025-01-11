@@ -1,12 +1,12 @@
 const express = require("express");
-const labRouter = express.Router();
-const labController = require("../controller/group");
+const pcRouter = express.Router();
+const pcController = require("../controller/pc");
 
-labRouter.get("/group", labController.getGroup);
-labRouter.get("/group/add", labController.getAddGroup);
-labRouter.post("/group/add", labController.postAddGroup);
-labRouter.get("/group/delete/:id", labController.getDeleteGroup);
-labRouter.get("/group/edit/:id", labController.getEditGroup);
-labRouter.post("/group/edit/:id", labController.postEditGroup);
+pcRouter.get("/pc/add", pcController.getAddPc);
+pcRouter.post("/pc/add", pcController.postAddPc);
+pcRouter.get("/pc/delete/:id", pcController.getDeletePc);
+pcRouter.get("/pc/edit/:id", pcController.getEditPc);
+pcRouter.post("/pc/edit/:id", pcController.postEditPc);
+pcRouter.get("/pc/:lId", pcController.getPc);
 
-module.exports = labRouter;
+module.exports = pcRouter;

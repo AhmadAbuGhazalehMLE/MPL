@@ -1,61 +1,68 @@
-const { render } = require("ejs");
 const Group = require("../model/group");
-exports.getGroup = (req, res) => {
-  Group.find().then((data) =>
-    res.render("group/group.ejs", {
-      title: "Groups",
-      data: data,
+
+exports.getPc = (req, res) => {
+  req.session.lId = req.params.lId;
+  Group.findById(req.session.gId).then((data) =>
+    res.render("pc/pc.ejs", {
+      title: "PCs",
+      data: data.labs[req.session.lId].pcs,
       isAuth: req.session.isAuthenticated,
+      gId: req.session.gId,
     })
   );
 };
 
-exports.getAddGroup = (req, res) => {
+exports.getAddPc = (req, res) => {
   if (req.session.isAuthenticated)
-    res.render("group/add-group.ejs", {
-      title: "Add Group",
+    res.render("pc/add-pc.ejs", {
+      title: "Add PC",
       isAuth: req.session.isAuthenticated,
     });
-  else res.redirect("/group");
+  else res.redirect(`/pc/${req.session.lId}`);
 };
 
-exports.postAddGroup = (req, res) => {
-  const new_group = new Group({
-    name: req.body.name,
-    description: req.body.description,
+exports.postAddPc = (req, res) => {
+  Group.findById(req.session.gId).then((data) => {
+    data.labs[req.session.lId].pcs.push({
+      name: req.body.name,
+      description: req.body.description,
+    });
+    data.save();
   });
-  new_group.save();
-  res.redirect("/group");
+  res.redirect(`/pc/${req.session.lId}`);
 };
 
-exports.getDeleteGroup = async (req, res) => {
+exports.getDeletePc = async (req, res) => {
   if (req.session.isAuthenticated) {
-    const group_id = req.params.id;
-    await Group.findByIdAndDelete(group_id);
+    const pcId = req.params.id;
+    await Group.findById(req.session.gId).then((group) => {
+      group.labs[req.session.lId].pcs.splice(pcId);
+      group.save();
+    });
   }
-  res.redirect("/group");
+  res.redirect(`/pc/${req.session.lId}`);
 };
 
-exports.getEditGroup = async (req, res) => {
+exports.getEditPc = async (req, res) => {
   if (req.session.isAuthenticated) {
-    const groupId = req.params.id;
-    req.session.cGroupId = groupId;
-    Group.findById(groupId).then((group) =>
-      res.render("group/edit-group.ejs", {
-        title: "Edit Group",
+    const pcId = req.params.id;
+    Group.findById(req.session.gId).then((group) =>
+      res.render("pc/edit-pc.ejs", {
+        title: "Edit PC",
         isAuth: req.session.isAuthenticated,
-        group: group,
+        pc: group.labs[req.session.lId].pcs[pcId],
       })
     );
-  } else res.redirect("/group");
+  } else res.redirect(`/pc/${req.session.lId}`);
 };
 
-exports.postEditGroup = async (req, res) => {
-  const group_id = req.params.id;
-  Group.findById(group_id).then((group) => {
-    group.name = req.body.name;
-    group.description = req.body.description;
+exports.postEditPc = async (req, res) => {
+  const pcId = req.params.id;
+  Group.findById(req.session.gId).then((group) => {
+    pc = group.labs[req.session.lId].pcs[pcId];
+    pc.name = req.body.name;
+    pc.description = req.body.description;
     group.save();
-    res.redirect("/group");
+    res.redirect(`/pc/${req.session.lId}`);
   });
 };

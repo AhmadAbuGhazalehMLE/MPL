@@ -8,6 +8,7 @@ exports.getLab = (req, res) => {
       title: "Labs",
       data: data.labs,
       isAuth: req.session.isAuthenticated,
+      
     })
   );
 };

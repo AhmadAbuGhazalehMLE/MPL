@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const loginRouter = require("./routes/auth");
 const groupRouter = require("./routes/group");
 const labRouter = require("./routes/lab");
+const pcRouter = require("./routes/pc");
 const errorRouter = require("./routes/error");
 // Create Session
 const expressSession = require("express-session");
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, "puplic")));
 app.use(loginRouter);
 app.use(groupRouter);
 app.use(labRouter);
+app.use(pcRouter);
 app.use(errorRouter);
 mongoose
   .connect("mongodb://localhost:27017/lab")
